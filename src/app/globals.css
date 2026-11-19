@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens. Components use these via Tailwind classes
+ * (bg-surface, text-ink-muted, border-line, bg-brand-600 …).
+ */
+@theme {
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Surfaces & ink */
+  --color-page: #f6f7f9;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f9fafb;
+  --color-line: #e5e7eb;
+  --color-line-strong: #d1d5db;
+  --color-ink: #0f172a;
+  --color-ink-secondary: #475569;
+  --color-ink-muted: #64748b;
+
+  /* Brand (teal-blue, medical) */
+  --color-brand-50: #eef6ff;
+  --color-brand-100: #d9eaff;
+  --color-brand-200: #bcd9ff;
+  --color-brand-500: #2a78d6;
+  --color-brand-600: #1f66bd;
+  --color-brand-700: #1c5299;
+
+  /* Chart tokens (validated data-viz palette) */
+  --color-chart-1: #2a78d6;
+  --color-chart-grid: #e1e0d9;
+  --color-chart-axis: #898781;
+
+  /* Status (never used as series colors; always paired with a label) */
+  --color-status-good: #0ca30c;
+  --color-status-info: #2a78d6;
+  --color-status-warning: #fab219;
+  --color-status-critical: #d03b3b;
+  --color-status-neutral: #898781;
+
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 3px rgb(15 23 42 / 0.06);
+  --shadow-pop: 0 10px 30px -10px rgb(15 23 42 / 0.25);
+
+  --animate-fade-in: fade-in 150ms ease-out;
+  --animate-scale-in: scale-in 160ms ease-out;
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: translateY(4px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Tabular figures for numbers in tables & stat tiles. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Recharts: remove focus outline box on click, keep keyboard focus visible. */
+.recharts-wrapper:focus,
+.recharts-surface:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
