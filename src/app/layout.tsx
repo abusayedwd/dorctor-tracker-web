@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1f66bd",
+  themeColor: "#3b4fd4",
   width: "device-width",
   initialScale: 1,
 };
@@ -23,7 +23,20 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <StoreProvider>{children}</StoreProvider>
-        <Toaster position="top-right" richColors closeButton toastOptions={{ duration: 3500 }} />
+        <Toaster
+          position="top-right"
+          richColors
+          closeButton
+          expand
+          toastOptions={{
+            duration: 3500,
+            classNames: {
+              toast: "font-sans text-sm shadow-pop",
+              title: "font-semibold",
+              description: "text-xs opacity-80",
+            },
+          }}
+        />
       </body>
     </html>
   );

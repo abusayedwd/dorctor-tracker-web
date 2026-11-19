@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/Button";
 import { Field, Input } from "@/components/ui/Input";
 import { refreshSession } from "@/lib/session";
@@ -28,7 +29,7 @@ export function LoginForm({ hasSession }: { hasSession: boolean }) {
   const router = useRouter();
   const next = safeNext(useSearchParams().get("next"));
   const dispatch = useAppDispatch();
-  const [login, { isLoading, error }] = useLoginMutation();
+  const [login, { isLoading }] = useLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
 
   const {
@@ -53,21 +54,18 @@ export function LoginForm({ hasSession }: { hasSession: boolean }) {
   }, [hasSession, dispatch, router, next]);
 
   const onSubmit = async (values: FormValues) => {
+    const id = toast.loading("Signing in…");
     try {
       await login(values).unwrap();
+      toast.success("Welcome back!", { id, description: "Redirecting to dashboard…" });
       router.replace(next);
-    } catch {
-      /* error rendered below */
+    } catch (err) {
+      toast.error("Sign in failed", { id, description: getErrorMessage(err, "Invalid email or password") });
     }
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5" noValidate>
-      {error && (
-        <div role="alert" className="rounded-lg border border-red-200 bg-red-50 px-3.5 py-2.5 text-sm text-red-700">
-          {getErrorMessage(error, "Unable to sign in")}
-        </div>
-      )}
 
       <Field label="Email" htmlFor="email" error={errors.email?.message}>
         <Input
