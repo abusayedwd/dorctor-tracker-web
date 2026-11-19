@@ -98,20 +98,23 @@ export function DashboardView() {
                 value={s.totalDoctors}
                 icon={<Stethoscope className="h-5 w-5" aria-hidden />}
                 hint={`+${s.newDoctors} in last ${rangeLabel}`}
+                color="brand"
               />
-              <StatCard label="Total patients" value={s.totalPatients} icon={<Users className="h-5 w-5" aria-hidden />} hint="across all doctors" />
+              <StatCard label="Total patients" value={s.totalPatients} icon={<Users className="h-5 w-5" aria-hidden />} hint="across all doctors" color="teal" />
               <StatCard
                 label={`New patients · ${rangeLabel}`}
                 value={s.newPatients}
                 change={s.newPatientsChange}
                 icon={<Activity className="h-5 w-5" aria-hidden />}
                 hint="vs previous period"
+                color="amber"
               />
               <StatCard
                 label="Critical patients"
                 value={s.criticalPatients}
                 icon={<AlertTriangle className="h-5 w-5" aria-hidden />}
                 hint={`${s.avgPatientsPerDoctor} avg patients / doctor`}
+                color="rose"
               />
             </>
           )}

@@ -9,52 +9,85 @@
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
   /* Surfaces & ink */
-  --color-page: #f6f7f9;
+  --color-page: #f0f4f8;
   --color-surface: #ffffff;
-  --color-surface-muted: #f9fafb;
-  --color-line: #e5e7eb;
-  --color-line-strong: #d1d5db;
+  --color-surface-muted: #f8fafc;
+  --color-surface-elevated: #ffffff;
+  --color-line: #e2e8f0;
+  --color-line-strong: #cbd5e1;
   --color-ink: #0f172a;
-  --color-ink-secondary: #475569;
+  --color-ink-secondary: #334155;
   --color-ink-muted: #64748b;
 
-  /* Brand (teal-blue, medical) */
-  --color-brand-50: #eef6ff;
-  --color-brand-100: #d9eaff;
-  --color-brand-200: #bcd9ff;
-  --color-brand-500: #2a78d6;
-  --color-brand-600: #1f66bd;
-  --color-brand-700: #1c5299;
+  /* Brand — deep blue-indigo, clinical & modern */
+  --color-brand-50:  #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-300: #a5b4fc;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #4f63f5;
+  --color-brand-600: #3b4fd4;
+  --color-brand-700: #2d3db0;
+  --color-brand-800: #233090;
+  --color-brand-900: #1a2370;
 
-  /* Chart tokens (validated data-viz palette) */
-  --color-chart-1: #2a78d6;
-  --color-chart-grid: #e1e0d9;
-  --color-chart-axis: #898781;
+  /* Accent — teal, used for highlights & secondary actions */
+  --color-accent-50:  #f0fdfa;
+  --color-accent-100: #ccfbf1;
+  --color-accent-500: #14b8a6;
+  --color-accent-600: #0d9488;
 
-  /* Status (never used as series colors; always paired with a label) */
-  --color-status-good: #0ca30c;
-  --color-status-info: #2a78d6;
-  --color-status-warning: #fab219;
-  --color-status-critical: #d03b3b;
-  --color-status-neutral: #898781;
+  /* Chart tokens */
+  --color-chart-1: #4f63f5;
+  --color-chart-2: #14b8a6;
+  --color-chart-3: #f59e0b;
+  --color-chart-4: #ef4444;
+  --color-chart-5: #8b5cf6;
+  --color-chart-grid: #e2e8f0;
+  --color-chart-axis: #94a3b8;
 
-  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 1px 3px rgb(15 23 42 / 0.06);
-  --shadow-pop: 0 10px 30px -10px rgb(15 23 42 / 0.25);
+  /* Status */
+  --color-status-good:     #16a34a;
+  --color-status-info:     #4f63f5;
+  --color-status-warning:  #d97706;
+  --color-status-critical: #dc2626;
+  --color-status-neutral:  #64748b;
 
-  --animate-fade-in: fade-in 150ms ease-out;
-  --animate-scale-in: scale-in 160ms ease-out;
+  /* Shadows — layered for depth */
+  --shadow-xs:   0 1px 2px rgb(15 23 42 / 0.04);
+  --shadow-card: 0 1px 3px rgb(15 23 42 / 0.06), 0 1px 2px rgb(15 23 42 / 0.04);
+  --shadow-md:   0 4px 12px rgb(15 23 42 / 0.08), 0 2px 4px rgb(15 23 42 / 0.04);
+  --shadow-pop:  0 20px 40px -12px rgb(15 23 42 / 0.22), 0 4px 8px rgb(15 23 42 / 0.06);
+  --shadow-brand:0 4px 14px rgb(79 99 245 / 0.35);
+
+  /* Animations */
+  --animate-fade-in:    fade-in 180ms ease-out;
+  --animate-scale-in:   scale-in 200ms cubic-bezier(0.16,1,0.3,1);
+  --animate-slide-up:   slide-up 220ms cubic-bezier(0.16,1,0.3,1);
+  --animate-shimmer:    shimmer 1.6s infinite;
+
   @keyframes fade-in {
     from { opacity: 0; }
-    to { opacity: 1; }
+    to   { opacity: 1; }
   }
   @keyframes scale-in {
-    from { opacity: 0; transform: translateY(4px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+    from { opacity: 0; transform: translateY(6px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)   scale(1);    }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0);    }
+  }
+  @keyframes shimmer {
+    from { background-position: 200% center; }
+    to   { background-position: -200% center; }
   }
 }
 
 html {
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
@@ -68,11 +101,37 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* Gradient text utility */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-brand-600) 0%, var(--color-brand-400) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Shimmer skeleton */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-line) 25%,
+    var(--color-surface-muted) 50%,
+    var(--color-line) 75%
+  );
+  background-size: 400% 100%;
+  animation: var(--animate-shimmer);
+}
+
 /* Recharts: remove focus outline box on click, keep keyboard focus visible. */
 .recharts-wrapper:focus,
 .recharts-surface:focus {
   outline: none;
 }
+
+/* Custom scrollbar — thin & branded */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-line-strong); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-ink-muted); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
