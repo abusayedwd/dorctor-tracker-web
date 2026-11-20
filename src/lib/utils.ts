@@ -30,8 +30,9 @@ export const getErrorMessage = (error: unknown, fallback = "Something went wrong
     if (data?.errors?.length) return data.errors.map((e) => e.message).join(", ");
     if (data?.message) return data.message;
   }
-  if (error && typeof error === "object" && "status" in error && error.status === "FETCH_ERROR") {
-    return "Cannot reach the server. Check your connection.";
+  if (error && typeof error === "object" && "status" in error) {
+    if (error.status === "FETCH_ERROR") return "Cannot reach the server. Check your connection.";
+    if (error.status === 503) return "Database is currently unavailable. Please try again shortly.";
   }
   return fallback;
 };

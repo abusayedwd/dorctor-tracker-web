@@ -69,13 +69,17 @@ export const StatCard = memo(StatCardBase);
 
 export function StatCardSkeleton() {
   return (
-    <Card className="p-5">
+    <Card className="relative overflow-hidden p-5">
+      <div className="absolute inset-x-0 top-0 h-0.5 skeleton-shimmer" aria-hidden />
       <div className="flex items-start justify-between gap-3">
         <Skeleton className="h-4 w-28" />
         <Skeleton className="h-10 w-10 rounded-xl" />
       </div>
-      <Skeleton className="mt-4 h-8 w-20" />
-      <Skeleton className="mt-2 h-3 w-32" />
+      <Skeleton className="mt-4 h-9 w-24 rounded-lg" />
+      <div className="mt-2 flex items-center gap-2">
+        <Skeleton className="h-5 w-12 rounded-full" />
+        <Skeleton className="h-3 w-28" />
+      </div>
     </Card>
   );
 }
