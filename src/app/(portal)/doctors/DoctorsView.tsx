@@ -229,9 +229,19 @@ export function DoctorsView() {
         {error && !data ? (
           <ErrorState message={getErrorMessage(error)} onRetry={refetch} />
         ) : isLoading ? (
-          <div className="space-y-3 p-4" aria-busy>
+          <div className="divide-y divide-line" aria-busy>
             {Array.from({ length: 6 }, (_, i) => (
-              <Skeleton key={i} className="h-12 w-full" />
+              <div key={i} className="flex items-center gap-3 px-4 py-3">
+                <Skeleton className="h-9 w-9 rounded-full shrink-0" />
+                <div className="flex-1 space-y-1.5">
+                  <Skeleton className="h-3.5 w-40 rounded-full" />
+                  <Skeleton className="h-3 w-28 rounded-full" />
+                </div>
+                <Skeleton className="h-5 w-20 rounded-full hidden sm:block" />
+                <Skeleton className="h-5 w-24 rounded-full hidden md:block" />
+                <Skeleton className="h-3 w-16 rounded-full hidden lg:block" />
+                <Skeleton className="h-7 w-16 rounded-lg" />
+              </div>
             ))}
           </div>
         ) : items.length === 0 ? (

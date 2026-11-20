@@ -10,12 +10,16 @@ interface PageHeaderProps {
 export function PageHeader({ title, description, actions, breadcrumb }: PageHeaderProps) {
   return (
     <div className="mb-6">
-      {breadcrumb && <div className="mb-2">{breadcrumb}</div>}
+      {breadcrumb && <div className="mb-3">{breadcrumb}</div>}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div className="min-w-0">
-          <h1 className="text-2xl font-bold tracking-tight text-ink">{title}</h1>
+          {/* Accent bar */}
+          <div className="mb-2 flex items-center gap-2">
+            <span className="h-5 w-1 rounded-full bg-gradient-to-b from-brand-500 to-brand-700" aria-hidden />
+            <h1 className="text-2xl font-bold tracking-tight text-ink">{title}</h1>
+          </div>
           {description && (
-            <p className="mt-1 text-sm text-ink-muted">{description}</p>
+            <p className="ml-3 text-sm text-ink-muted leading-relaxed">{description}</p>
           )}
         </div>
         {actions && (

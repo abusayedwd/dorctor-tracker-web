@@ -9,14 +9,16 @@ import { ChartCard, DataTable } from "@/components/dashboard/ChartCard";
 import { StatCard, StatCardSkeleton } from "@/components/dashboard/StatCard";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Card } from "@/components/ui/Card";
-import { EmptyState, ErrorState, Skeleton } from "@/components/ui/Feedback";
+import { ChartSkeleton, EmptyState, ErrorState } from "@/components/ui/Feedback";
 import { useUrlFilters } from "@/hooks/useUrlFilters";
 import { CONDITION_META, DASHBOARD_RANGES } from "@/lib/constants";
 import { cn, getErrorMessage } from "@/lib/utils";
 import { useGetDashboardStatsQuery } from "@/store/api/dashboardApi";
 import type { DashboardRange } from "@/types";
 
-const ChartSkeleton = ({ height = "h-72" }: { height?: string }) => <Skeleton className={cn("w-full rounded-lg", height)} />;
+const ChartSkeletonBox = ({ height = "h-72" }: { height?: string }) => (
+  <ChartSkeleton height={height} />
+);
 
 // Code-split: Recharts is only downloaded when the dashboard renders.
 const TrendChart = dynamic(() => import("@/components/dashboard/charts").then((m) => m.TrendChart), {
@@ -52,7 +54,11 @@ export function DashboardView() {
   );
 
   const rangePicker = (
-    <div className="flex rounded-lg bg-surface p-1 shadow-card ring-1 ring-line" role="group" aria-label="Date range">
+    <div
+      className="flex rounded-xl bg-surface p-1 shadow-card ring-1 ring-line"
+      role="group"
+      aria-label="Date range"
+    >
       {DASHBOARD_RANGES.map((r) => (
         <button
           key={r.value}
@@ -60,8 +66,10 @@ export function DashboardView() {
           onClick={() => setFilters({ range: String(r.value) })}
           aria-pressed={days === r.value}
           className={cn(
-            "rounded-md px-2.5 py-1.5 text-xs font-medium whitespace-nowrap transition-colors sm:px-3 sm:text-sm",
-            days === r.value ? "bg-brand-600 text-white shadow-sm" : "text-ink-secondary hover:bg-slate-100",
+            "rounded-lg px-2.5 py-1.5 text-xs font-semibold whitespace-nowrap transition-all duration-150 sm:px-3 sm:text-sm",
+            days === r.value
+              ? "bg-brand-600 text-white shadow-sm"
+              : "text-ink-muted hover:bg-slate-100 hover:text-ink",
           )}
         >
           {r.label}
@@ -127,7 +135,7 @@ export function DashboardView() {
             description={`New patients per ${data?.range.granularity ?? "day"} · last ${rangeLabel}`}
             table={<DataTable head={["Date", "Patients", "Doctors joined"]} rows={trendTable} />}
           >
-            {isLoading || !data ? <ChartSkeleton /> : <TrendChart data={data.trend} granularity={data.range.granularity} />}
+            {isLoading || !data ? <ChartSkeletonBox /> : <TrendChart data={data.trend} granularity={data.range.granularity} />}
           </ChartCard>
 
           <ChartCard
@@ -142,7 +150,7 @@ export function DashboardView() {
               )
             }
           >
-            {isLoading || !data ? <ChartSkeleton height="h-56" /> : <ConditionBreakdown data={data.patientsByCondition} />}
+            {isLoading || !data ? <ChartSkeletonBox height="h-56" /> : <ConditionBreakdown data={data.patientsByCondition} />}
           </ChartCard>
         </div>
 
@@ -160,7 +168,7 @@ export function DashboardView() {
             }
           >
             {isLoading || !data ? (
-              <ChartSkeleton />
+              <ChartSkeletonBox />
             ) : data.patientsPerDoctor.length ? (
               <DoctorsBarChart data={data.patientsPerDoctor} />
             ) : (
@@ -170,7 +178,7 @@ export function DashboardView() {
 
           <ChartCard title="Top specializations" description="Patient volume by specialization">
             {isLoading || !data ? (
-              <ChartSkeleton />
+              <ChartSkeletonBox />
             ) : data.specializations.length ? (
               <SpecializationList data={data.specializations} />
             ) : (

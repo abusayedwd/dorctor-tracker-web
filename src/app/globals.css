@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 /*
- * Design tokens. Components use these via Tailwind classes
- * (bg-surface, text-ink-muted, border-line, bg-brand-600 …).
+ * Design tokens — used as Tailwind utilities:
+ * bg-surface, text-ink-muted, border-line, shadow-card, animate-slide-up …
  */
 @theme {
   --font-sans: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
-  /* Surfaces & ink */
-  --color-page: #f0f4f8;
-  --color-surface: #ffffff;
-  --color-surface-muted: #f8fafc;
+  /* ── Surfaces & ink ─────────────────────────────────────────── */
+  --color-page:             #eef2f7;
+  --color-surface:          #ffffff;
+  --color-surface-muted:    #f8fafc;
   --color-surface-elevated: #ffffff;
-  --color-line: #e2e8f0;
-  --color-line-strong: #cbd5e1;
-  --color-ink: #0f172a;
-  --color-ink-secondary: #334155;
-  --color-ink-muted: #64748b;
+  --color-line:             #e2e8f0;
+  --color-line-strong:      #cbd5e1;
+  --color-ink:              #0f172a;
+  --color-ink-secondary:    #334155;
+  --color-ink-muted:        #64748b;
 
-  /* Brand — deep blue-indigo, clinical & modern */
+  /* ── Brand — deep blue-indigo ───────────────────────────────── */
   --color-brand-50:  #eef2ff;
   --color-brand-100: #e0e7ff;
   --color-brand-200: #c7d2fe;
@@ -31,13 +31,13 @@
   --color-brand-800: #233090;
   --color-brand-900: #1a2370;
 
-  /* Accent — teal, used for highlights & secondary actions */
+  /* ── Accent — teal ──────────────────────────────────────────── */
   --color-accent-50:  #f0fdfa;
   --color-accent-100: #ccfbf1;
   --color-accent-500: #14b8a6;
   --color-accent-600: #0d9488;
 
-  /* Chart tokens */
+  /* ── Chart tokens ───────────────────────────────────────────── */
   --color-chart-1: #4f63f5;
   --color-chart-2: #14b8a6;
   --color-chart-3: #f59e0b;
@@ -46,25 +46,29 @@
   --color-chart-grid: #e2e8f0;
   --color-chart-axis: #94a3b8;
 
-  /* Status */
+  /* ── Status ─────────────────────────────────────────────────── */
   --color-status-good:     #16a34a;
   --color-status-info:     #4f63f5;
   --color-status-warning:  #d97706;
   --color-status-critical: #dc2626;
   --color-status-neutral:  #64748b;
 
-  /* Shadows — layered for depth */
-  --shadow-xs:   0 1px 2px rgb(15 23 42 / 0.04);
-  --shadow-card: 0 1px 3px rgb(15 23 42 / 0.06), 0 1px 2px rgb(15 23 42 / 0.04);
-  --shadow-md:   0 4px 12px rgb(15 23 42 / 0.08), 0 2px 4px rgb(15 23 42 / 0.04);
-  --shadow-pop:  0 20px 40px -12px rgb(15 23 42 / 0.22), 0 4px 8px rgb(15 23 42 / 0.06);
-  --shadow-brand:0 4px 14px rgb(79 99 245 / 0.35);
+  /* ── Shadows ─────────────────────────────────────────────────── */
+  --shadow-xs:    0 1px 2px rgb(15 23 42 / 0.04);
+  --shadow-card:  0 1px 3px rgb(15 23 42 / 0.07), 0 1px 2px rgb(15 23 42 / 0.04);
+  --shadow-md:    0 4px 16px rgb(15 23 42 / 0.09), 0 2px 4px rgb(15 23 42 / 0.05);
+  --shadow-pop:   0 20px 40px -12px rgb(15 23 42 / 0.22), 0 4px 8px rgb(15 23 42 / 0.06);
+  --shadow-brand: 0 4px 14px rgb(79 99 245 / 0.35);
+  --shadow-teal:  0 4px 14px rgb(20 184 166 / 0.30);
+  --shadow-amber: 0 4px 14px rgb(245 158 11 / 0.28);
+  --shadow-rose:  0 4px 14px rgb(239 68 68 / 0.28);
 
-  /* Animations */
+  /* ── Animations ─────────────────────────────────────────────── */
   --animate-fade-in:    fade-in 180ms ease-out;
   --animate-scale-in:   scale-in 200ms cubic-bezier(0.16,1,0.3,1);
   --animate-slide-up:   slide-up 220ms cubic-bezier(0.16,1,0.3,1);
-  --animate-shimmer:    shimmer 1.6s infinite;
+  --animate-shimmer:    shimmer 1.8s ease-in-out infinite;
+  --animate-pulse-slow: pulse-slow 3s ease-in-out infinite;
 
   @keyframes fade-in {
     from { opacity: 0; }
@@ -79,11 +83,16 @@
     to   { opacity: 1; transform: translateY(0);    }
   }
   @keyframes shimmer {
-    from { background-position: 200% center; }
-    to   { background-position: -200% center; }
+    0%   { background-position: 200% center; }
+    100% { background-position: -200% center; }
+  }
+  @keyframes pulse-slow {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.45; }
   }
 }
 
+/* ─────────────────────────────────────────────────────────────── */
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -96,12 +105,10 @@ body {
   font-family: var(--font-sans);
 }
 
-/* Tabular figures for numbers in tables & stat tiles. */
-.tabular {
-  font-variant-numeric: tabular-nums;
-}
+/* Tabular figures */
+.tabular { font-variant-numeric: tabular-nums; }
 
-/* Gradient text utility */
+/* Gradient text */
 .text-gradient {
   background: linear-gradient(135deg, var(--color-brand-600) 0%, var(--color-brand-400) 100%);
   -webkit-background-clip: text;
@@ -109,29 +116,46 @@ body {
   background-clip: text;
 }
 
-/* Shimmer skeleton */
+/* ── Shimmer skeleton ────────────────────────────────────────── */
 .skeleton-shimmer {
   background: linear-gradient(
-    90deg,
-    var(--color-line) 25%,
-    var(--color-surface-muted) 50%,
-    var(--color-line) 75%
+    105deg,
+    var(--color-line)         20%,
+    rgb(255 255 255 / 0.70)   50%,
+    var(--color-line)         80%
   );
   background-size: 400% 100%;
   animation: var(--animate-shimmer);
 }
 
-/* Recharts: remove focus outline box on click, keep keyboard focus visible. */
-.recharts-wrapper:focus,
-.recharts-surface:focus {
-  outline: none;
+/* ── Page-level subtle grid pattern (applied by CSS, not JSX) ── */
+.page-grid-bg {
+  background-image:
+    linear-gradient(var(--color-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
 }
 
+/* Recharts — no focus outline box, keyboard still visible */
+.recharts-wrapper:focus,
+.recharts-surface:focus { outline: none; }
+
 /* Custom scrollbar — thin & branded */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--color-line-strong); border-radius: 99px; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-line-strong);
+  border-radius: 99px;
+}
 ::-webkit-scrollbar-thumb:hover { background: var(--color-ink-muted); }
+
+/* Focus ring global */
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
